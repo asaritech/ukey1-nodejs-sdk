@@ -1,1 +1,4 @@
 node_modules/
+nbproject/
+npm-debug.log
+test/my_test_connect.js

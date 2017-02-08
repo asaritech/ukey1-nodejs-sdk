@@ -28,6 +28,11 @@ You can also download our [API specification](https://ukey1.nooledge.com/var/pub
 
 ## Requirements
 
+- Node.js >=4.3.2
+- [randomstring](https://www.npmjs.com/package/randomstring) >=1.1.5
+- [bcrypt-nodejs](https://www.npmjs.com/package/bcrypt-nodejs) >=0.0.3
+- [request](https://www.npmjs.com/package/request) >=2.79.0
+
 ## Installation
 
 ## Usage
@@ -56,12 +61,61 @@ Your app may look like this:
 
 First, you need to make a request to our endpoint `/auth/connect` to get Gateway URL. Then redirect user to that URL.
 
+```javascript
+var ukey1 = require("ukey1-nodejs-sdk");
+
+// You need a request ID (no need to be unique but it's better)
+// It may be a random string or number
+// But it may also be your own reference ID
+// Maximum length is 128 chars
+var requestId = ukey1.randomString();
+
+// This is an URL for redirection back to the app
+// Do you know what is absolutely perfect?
+// - it may be unique
+// - it may contain query parameters and/or fragment
+var returnUrl = 'http://example.org/login?action=check&user=XXX#fragment';
+
+// Here is a list of possible grants:
+// - `access_token` (always default)
+// - `refresh_token` (optional, use only if you will really need to refresh `access_token` when expires)
+// - `email` (access to user's email)
+// - `image` (access to user's thumbnail)
+// NOTE: If you are eligible to use "!" (means a required value), you may use it with `email!` and `image!`
+var scope = [
+    'access_token',
+    'email',
+    'image'
+];
+
+try {
+    var connect = ukey1.connect({
+        appId: APP_ID,
+        secretKey: SECRET_KEY,
+        requestId: requestId,
+        returnUrl: returnUrl,
+        scope: scope
+    });
+    connect.execute(function(data) {
+        // data.connect_id is our reference ID (maximum length 128 chars)
+        // Store requestId and data.connect_id in your database or session, you will need them later
+        // Redirect user to Ukey1 Gateway (data.gateway.url)
+
+        console.log('Request ID', requestId);
+        console.log('Connect ID', data.connect_id);
+        console.log('Gateway URL', data.gateway.url);
+});
+} catch (error) {
+    // Error
+}
+```
+
 ### Requests for access token and user details
 
 Once the user authorizes your app, Ukey1 redirects the user back to your app to the URL you specified earlier. 
 The same is done if user cancels the request.
 
-URL will look like this: `http://example.org/login.php?action=check&user=XXX&_ukey1[request_id]={REQUEST_ID}&_ukey1[connect_id]={CONNECT_ID}&_ukey1[result]={RESULT}&_ukey1[signature]={SIGNATURE}#fragment` 
+URL will look like this: `http://example.org/login?action=check&user=XXX&_ukey1[request_id]={REQUEST_ID}&_ukey1[connect_id]={CONNECT_ID}&_ukey1[result]={RESULT}&_ukey1[signature]={SIGNATURE}#fragment` 
 where `REQUEST_ID` is previously used `$requestId`, `CONNECT_ID` is previously used `$connectId`, `RESULT` may be *authorized*, *canceled* or *expired* and 
 `SIGNATURE` is a security signature.
 
