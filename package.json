@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "randomstring": ">=1.1.5",
-    "bcrypt-nodejs": ">=0.0.3",
+    "js-sha512": ">=0.3.0",
     "request": ">=2.79.0"
   }
 }

@@ -32,7 +32,7 @@ You can also download our API specification in the following formats:
 
 - Node.js >=4.3.2
 - [randomstring](https://www.npmjs.com/package/randomstring) >=1.1.5
-- [bcrypt-nodejs](https://www.npmjs.com/package/bcrypt-nodejs) >=0.0.3
+- [js-sha512](https://www.npmjs.com/package/js-sha512) >=0.3.0
 - [request](https://www.npmjs.com/package/request) >=2.79.0
 
 ## Installation
@@ -127,7 +127,7 @@ where `REQUEST_ID` is previously used `$requestId`, `CONNECT_ID` is previously u
 
 ## License
 
-This code is released under the MIT license. Please see [LICENSE](https://github.com/asaritech/ukey1-php-sdk/blob/master/LICENSE) file for details.
+This code is released under the MIT license. Please see [LICENSE](https://github.com/asaritech/ukey1-nodejs-sdk/blob/master/LICENSE) file for details.
 
 ## Contributing
 
@@ -136,5 +136,5 @@ If you would like to work on another SDK (in your favorite language), we will gl
 
 ## Contact
 
-Reporting of any [issues](https://github.com/asaritech/ukey1-php-sdk/issues) are appreciated. 
+Reporting of any [issues](https://github.com/asaritech/ukey1-nodejs-sdk/issues) are appreciated. 
 If you want to contribute or you have a critical security issue, please write us directly to [developers@asaritech.com](mailto:developers@asaritech.com).
