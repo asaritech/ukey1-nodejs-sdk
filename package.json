@@ -1,32 +1,32 @@
 {
   "name": "ukey1-nodejs-sdk",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Ukey1 SDK for NodeJS",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-connect": "node test/connect.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/asaritech/ukey1-nodejs-sdk.git"
+    "url": "git+https://github.com/asaritech/ukey1-nodejs-sdk.git"
   },
   "keywords": [
-    "asaritech",
     "ukey1",
-    "sdk"
+    "nodejs-sdk",
+    "authentication",
+    "oauth2",
+    "ukey1-active-sdk"
   ],
-  "author": "Ukey1 Community (https://github.com/asaritech/ukey1-nodejs-sdk/contributors)",
+  "author": "Ukey1 Community",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/asaritech/ukey1-nodejs-sdk/issues"
   },
   "homepage": "https://github.com/asaritech/ukey1-nodejs-sdk#readme",
-  "engines": {
-    "node": ">= 4.3.2"
-  },
   "dependencies": {
-    "randomstring": ">=1.1.5",
-    "js-sha512": ">=0.3.0",
-    "request": ">=2.79.0"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.3.2"
   }
 }

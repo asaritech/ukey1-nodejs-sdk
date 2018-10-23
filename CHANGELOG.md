@@ -1,9 +1,7 @@
 # CHANGELOG
 
-Note that the Ukey1 NodeJS SDK follows [SemVer](http://semver.org/).
 
+## 0.x
 
-## 1.x
-
-- 1.0.0 (YYYY-MM-DD)
-  - Release description
+- 0.1.0 (2018-10-23)
+  - Initial release

@@ -1,4 +1,3 @@
-node_modules/
-nbproject/
-npm-debug.log
-test/my_test_connect.js
+/node_modules
+
+/package-lock.json
