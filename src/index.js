@@ -105,6 +105,67 @@ class Ukey1 {
 
     return await this.makeRequest(endpoint, method, headers, body);
   }
+
+  isValidSignature(signature, params) {
+    if (!signature) {
+      throw new Error('No signature');
+    }
+
+    if (!params) {
+      params = {};
+    }
+
+    let requestId, connectId, result, code;
+    requestId = params.requestId || '';
+    connectId = params.connectId || '';
+    result = params.result || '';
+    code = params.code || '';
+    const str = this.appId + requestId + connectId + code + result;
+    const verifier = crypto.createVerify('sha512');
+    verifier.update(str);
+
+    return verifier.verify(this.secretKey, signature, 'base64');
+  }
+
+  async getAccessToken(options) {
+    const endpoint = '/auth/v2/token';
+    const method = 'POST';
+    let requestId, connectId, code, headers, body;
+
+    if (!options) {
+      options = {};
+    }
+
+    requestId = options.requestId || '';
+    connectId = options.connectId || '';
+    code = options.code || '';
+
+    if (!(requestId && connectId && code)) {
+      throw new Error('Unspecified input params');
+    }
+
+    body = this.prepareBody({
+      request_id: requestId,
+      connect_id: connectId,
+      auth_code: code
+    });
+    headers = this.prepareHeaders(this.prepareSignature(endpoint, method, body), null);
+
+    return await this.makeRequest(endpoint, method, headers, body);
+  }
+
+  async getUserData(accessToken) {
+    const endpoint = '/auth/v2/me';
+    const method = 'GET';
+
+    if (!accessToken) {
+      throw new Error('Unspecified access token');
+    }
+
+    const headers = this.prepareHeaders(this.prepareSignature(endpoint, method, null, accessToken), accessToken);
+
+    return await this.makeRequest(endpoint, method, headers);
+  }
 }
 
 module.exports = Ukey1;
